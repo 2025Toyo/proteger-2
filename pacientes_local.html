@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pacientes - Local</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="pacientes_local.html">Pacientes (Editable)</a>
+        <a href="archivos.html">Archivos Médicos</a>
+        <a href="inventario.html">Inventario</a>
+        <a href="turnos.html">Turnos</a>
+    </nav>
+    <main>
+        <h1>Pacientes (Editable)</h1>
+        <input type="text" id="nombre" placeholder="Nombre del paciente">
+        <button onclick="agregarPaciente()">Agregar</button>
+        <ul id="lista"></ul>
+    </main>
+    <script>
+        let lista = JSON.parse(localStorage.getItem("pacientes") || "[]");
+        function renderizar() {
+            const ul = document.getElementById("lista");
+            ul.innerHTML = "";
+            lista.forEach((nombre, index) => {
+                const li = document.createElement("li");
+                li.textContent = nombre;
+                ul.appendChild(li);
+            });
+        }
+        function agregarPaciente() {
+            const nombre = document.getElementById("nombre").value;
+            if (nombre) {
+                lista.push(nombre);
+                localStorage.setItem("pacientes", JSON.stringify(lista));
+                renderizar();
+                document.getElementById("nombre").value = "";
+            }
+        }
+        renderizar();
+    </script>
+</body>
+</html>
